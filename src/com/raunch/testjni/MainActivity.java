@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //System.loadLibrary("minejni");
         MineJni test = new MineJni();
-        Log.i("test","The jni test log is " + test.getJniTest());
+        Log.i("Test","The jni test log is " + test.getJniTest());
     }
 
 

@@ -5,9 +5,9 @@ public class MineJni {
 	}
 	
 	public String getJniTest() {
-		return getTestString();
+		return getTestString("Haha");
 	}
 	
-	public native String getTestString(); 
+	public native String getTestString(String test); 
 
 }
