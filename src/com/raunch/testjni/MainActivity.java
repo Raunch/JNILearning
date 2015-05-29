@@ -16,6 +16,18 @@ public class MainActivity extends Activity {
         //System.loadLibrary("minejni");
         MineJni test = new MineJni();
         Log.i("Test","The jni test log is " + test.getJniTest());
+        int arr[] = new int[10];
+        for(int i=0; i<10; i++) {
+        	arr[i] = i;
+        }
+        Log.i("Test","The test int array sum is " +  test.sumArray(arr));
+        int[][] out = test.initInt2DArray(3);
+        for(int i=0; i<3; i++) {
+        	for (int j=0 ; j<3; j++) {
+        		Log.i("Test", "The output is " + out[i][j]);
+        	}
+        }
+        
     }
 
 
