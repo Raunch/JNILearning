@@ -1,6 +1,8 @@
 package com.raunch.testjni;
 
 public class MineJni {
+	public String mHello;
+	public static int mWorld;
 	public MineJni() {		
 	}
 	
@@ -11,6 +13,7 @@ public class MineJni {
 //	public int getSumArray(int[] arr) {
 //		return sumArray(arr);
 //	}
+	public native void accessField();
 	
 	public native String getTestString(String test); 
 	

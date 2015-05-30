@@ -8,27 +8,42 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends Activity {
+	 MineJni test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //System.loadLibrary("minejni");
-        MineJni test = new MineJni();
+        test = new MineJni();
         Log.i("Test","The jni test log is " + test.getJniTest());
-        int arr[] = new int[10];
+        testAccessField();
+    }
+    
+    public void testAccessField() {
+    	test.mHello="hello world";
+    	MineJni.mWorld = 100;
+    	test.accessField();
+    	Log.i("Test","After change, the string is " + test.mHello + " and the world is " + MineJni.mWorld);
+    }
+    
+    public void testInit2DArray() {
+    	 int[][] out = test.initInt2DArray(3);
+         for(int i=0; i<3; i++) {
+         	for (int j=0 ; j<3; j++) {
+         		Log.i("Test", "The output is " + out[i][j]);
+         	}
+         }
+    }
+    
+    public void testSumArray() {
+    	int arr[] = new int[10];
         for(int i=0; i<10; i++) {
         	arr[i] = i;
         }
-        Log.i("Test","The test int array sum is " +  test.sumArray(arr));
-        int[][] out = test.initInt2DArray(3);
-        for(int i=0; i<3; i++) {
-        	for (int j=0 ; j<3; j++) {
-        		Log.i("Test", "The output is " + out[i][j]);
-        	}
-        }
-        
+    	Log.i("Test","The test int array sum is " +  test.sumArray(arr));
     }
+    
 
 
     @Override

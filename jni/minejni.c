@@ -66,3 +66,33 @@ jobjectArray Java_com_raunch_testjni_MineJni_initInt2DArray(JNIEnv *env,  jclass
 	return result;
 }
 
+void Java_com_raunch_testjni_MineJni_accessField(JNIEnv *env, jobject thiz) {
+	jfieldID fid, fid2;
+	jstring jstr;
+	jint jworld;
+	const char *str;
+	int world;
+
+	jclass cls = (*env)->GetObjectClass(env, thiz);
+	LOGI("In C level");
+	fid = (*env)->GetFieldID(env, cls, "mHello", "Ljava/lang/String;");
+	fid2 = (*env)->GetStaticFieldID(env, cls, "mWorld", "I");
+	if (fid == NULL || fid2 == NULL) {
+		return;
+	}
+	jstr = (*env)->GetObjectField(env, thiz, fid);
+	str = (*env)->GetStringUTFChars(env, jstr, NULL);
+	if (str == NULL) {
+		return;
+	}
+	jworld = (*env)->GetStaticIntField(env, cls, fid2);
+	world = jworld;
+	(*env)->ReleaseStringUTFChars(env, jstr, str);
+	jstr = (*env)->NewStringUTF(env, "Fuck you OK");
+	if (jstr == NULL) {
+		return;
+	}
+	(*env)->SetObjectField(env, thiz, fid, jstr);
+	(*env)->SetStaticIntField(env, cls, fid2, 200);
+}
+
