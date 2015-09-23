@@ -1,6 +1,8 @@
 #include <string.h>
 #include <jni.h>
 #include <android/log.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 #define LOG_TAG "Test"
 
@@ -96,3 +98,39 @@ void Java_com_raunch_testjni_MineJni_accessField(JNIEnv *env, jobject thiz) {
 	(*env)->SetStaticIntField(env, cls, fid2, 200);
 }
 
+void getPackageName(JNIEnv *env, int pid) {
+	jclass vmstack = (*env)->FindClass(env, "dalvik/system/VMStack");
+	if (vmstack == NULL) {
+		LOGI("No find hide class");
+	}
+	jmethodID getCallingClassLoader = (*env)->GetStaticMethodID(env, vmstack, "getCallingClassLoader", "()Ljava/lang/ClassLoader;" );
+	if (getCallingClassLoader == NULL) {
+		LOGI("No find method getDefault");
+	} else {
+		jobject i_am = (*env)->CallStaticObjectMethod(env, vmstack, getCallingClassLoader);
+		if(i_am == NULL) {
+			LOGI("i_am null");
+		}
+	}
+	LOGI("fucking here");
+}
+
+jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+	//int MAX_SIZE = 512;
+	LOGI("Just go here, gaga");
+	//char current_absolute_path[MAX_SIZE];
+	//getcwd(current_absolute_path, MAX_SIZE);
+	//LOGI("Current path is %s", current_absolute_path);
+	pid_t pid = getpid();
+	LOGI("Current pid is %d", pid);
+
+	JNIEnv* env = NULL;
+	jint result = -1;
+	if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+		return -1;
+	}
+	result = JNI_VERSION_1_4;
+	getPackageName(env, pid);
+
+	return result;
+}

@@ -1,6 +1,8 @@
 package com.raunch.testjni;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,27 @@ public class MainActivity extends Activity {
         test = new MineJni();
         Log.i("Test","The jni test log is " + test.getJniTest());
         testAccessField();
+        //MineJni test = new MineJni();
+        //Log.i("Test","The jni test log is " + test.getJniTest());
+        try {
+			Context context = Context.class.newInstance();
+			context = context.createPackageContext("com.raunch.testjni", Context.CONTEXT_IGNORE_SECURITY);
+			String test = context.getPackageName();
+			Log.i("Test","Fucking here ..... and the packagename is " + test);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			Log.i("Test","Fucking here 111");
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			Log.i("Test","Fucking here 111222");
+			e.printStackTrace();
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			Log.i("Test","Fucking here 111333");
+			e.printStackTrace();
+		}
+        
     }
     
     public void testAccessField() {
